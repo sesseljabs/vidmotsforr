@@ -65,31 +65,22 @@ svg path {
 .jellyfish {
   animation: bouncae 5s ease infinite alternate;
 }
-svg:hover #leg1 {
+#leg1 {
   animation: leg1move 1s linear infinite forwards;
 }
-svg:hover #leg2 {
+#leg2 {
   animation: leg2move 1s linear infinite forwards -0.1s;
 }
-svg:hover #leg3 {
+#leg3 {
   animation: leg3move 1s linear infinite forwards -0.4s;
 }
-svg:hover #leg4 {
+#leg4 {
   animation: leg4move 1s linear infinite forwards -0.6s;
 }
-svg:hover #leg5 {
+#leg5 {
   animation: leg5move 1s linear infinite forwards -0.8s;
 }
-@keyframes dashes {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-svg:hover #uwu {
-  stroke-dashoffset: 271;
-  stroke-dasharray: 271;
-  animation: dashes 2s linear forwards;
-}
+
 </style>
 <g class="jellyfish">
   <circle cx="91" cy="85" r="90" stroke="none" stroke-width="3" fill="pink"/>
@@ -117,6 +108,9 @@ svg:hover #uwu {
   <text x="-250" y="240" transform="rotate(270)" font-size="68" font-family="'Open Sans', sans-serif">
     blubb.
   </text>
-  <path id="uwu" d="m 142.67062,257.27257 c -4.47701,8.95387 -3.47419,16.0037 -2.06626,18.25224 1.62315,2.59227 3.35456,2.99682 6.33105,2.46429 3.54325,-0.63396 6.75123,-3.25985 9.48295,-6.96501 1.64481,-2.23094 5.53756,-7.55261 6.57075,-10.99642 -0.36235,3.47499 0.70305,5.50316 1.75365,6.51884 2.01699,1.94991 4.75548,1.20395 6.38174,-0.0894 2.56763,-2.04188 5.42006,-6.74771 5.42006,-6.74771 0,0 0.26584,10.89035 0.8996,14.46393 1.1642,5.3766 3.27766,7.56968 4.42461,7.49646 1.20763,-0.0771 3.73204,-1.92394 6.83135,-9.15591 3.09946,-7.23196 5.06349,-12.46013 5.06349,-12.46013 0,0 0.89464,10.80576 3.52232,16.55651 1.16843,2.5571 3.02422,5.79237 5.2182,5.80329 2.0994,0.011 4.87688,-5.32482 6.05538,-9.41372 1.47813,-5.12849 2.42314,-11.48872 3.80068,-12.52184 2.46051,0.32278 4.1864,1.44806 7.86067,1.43249 3.78817,-0.21088 6.03169,-0.84021 8.90659,-2.72893 -0.91651,3.94937 -1.97341,7.52743 -2.27714,9.87978 -0.76127,5.89595 0.40218,11.13249 4.29475,10.96642 7.76804,-0.33142 11.15187,-6.88717 13.19258,-10.51723 1.90933,-3.39632 4.316,-10.2503 4.316,-10.2503 0,0 -1.48238,3.60097 -1.4562,7.15084 0.34434,3.44381 0.73996,8.31752 5.16571,9.29822 2.41061,0.34436 5.32411,0.2383 8.66323,-3.86927" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-  
+<style>
+  #leg1:hover{
+    d: path("m 18,90 c 1,35 1,35 2 ,59 1,24 -3 ,42  -3 ,56  l -1 ,46")
+  }
+</style>
 </svg>
