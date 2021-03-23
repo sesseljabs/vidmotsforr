@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>wow</title>
+</head>
+<body>
+    <style>
+        /* latin */
+        @font-face {
+          font-family: 'Open Sans';
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+          src: url(https://fonts.gstatic.com/s/opensans/v18/mem8YaGs126MiZpBA-UFVZ0b.woff2) format('woff2');
+          unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+        @keyframes hideshow {
+          0% { transform-origin: center 40px; }
+          93% { transform-origin: center 40px; transform: scaleY(1);}
+          100% {transform: scaleY(0.1);
+                transform-origin: center 40px;}
+        }
+        @keyframes bounce {
+          0% {transform: translate(0, 0);}
+          100% {transform: translate(0, 50);}
+        }
+        
+        @keyframes leg1move {
+          0% {d: path("m 18,90 c 1,35 1,35 2 ,59 1,24 -3 ,42  -3 ,56  l -1 ,46 ");}
+          25% {d: path("m 18 90 c 1 35 4 34 5 60 c 1 23 -6 41 -6 55 l -1 46");}
+          50% {d: path("m 18 90 c 1 35 1 35 2 61 c 1 21 2 39 2 53 l -6 47");}
+          75% {d: path("m 18 90 c 1 35 1 35 2 61 c 1 21 -1 37 -1 52 l 1 48");}
+          100% {d: path("m 18,90 c 1,35 1,35 2 ,59 1,24 -3 ,42  -3 ,56  l -1 ,46 ");}
+        }
+        @keyframes leg2move {
+          0% {d: path("M 51 90 C 46 120 51 140 50 169 C 49 212 45 221 48 253");}
+          25% {d: path("M 51 90 C 57 131 51 140 50 169 C 49 212 45 221 48 253");}
+          50% {d: path("M 51 90 C 52 131 55 141 54 169 C 53 206 45 221 48 253");}
+          75% {d: path("M 51 90 C 52 131 50 143 50 169 C 50 197 53 221 53 252");}
+          100% {d: path("M 51 90 C 46 120 51 140 50 169 C 49 212 45 221 48 253");}
+        }
+        @keyframes leg3move {
+          0% {d: path("M 85 90 C 86 131 88 161 87 184 C 86 216 86 253 86 253");}
+          25% {d: path("M 85 90 C 93 126 87 160 87 183 C 86 216 86 253 86 253");}
+          50% {d: path("M 85 90 C 86 125 90 160 91 182 C 90 202 86 253 86 253");}
+          75% {d: path("M 85 90 C 81 124 86 160 87 181 C 88 202 91 234 91 252");}
+          100% {d: path("M 85 90 C 86 131 88 161 87 184 C 86 216 86 253 86 253");}
+        }
+        @keyframes leg4move {
+          0% {d: path("M 125 92 S 129 102 130 125 C 133 148 126 166 127 194 S 132 233 127 254");}
+          25% {d: path("M 125 92 S 126 102 126 125 C 126 141 132 171 127 194 S 127 232 127 254");}
+          50% {d: path("M 125 92 S 126 102 126 125 C 126 141 123 171 127 194 S 130 231 127 254");}
+          75% {d: path("M 125 92 S 128 102 129 124 C 126 141 126 171 127 194 S 128 230 133 254");}
+          100% {d: path("M 125 92 S 129 102 130 125 C 133 148 126 166 127 194 S 132 233 127 254");}
+        }
+        @keyframes leg5move {
+          0% {d: path("M 164 90 C 158 123 157 120 163 166 C 167 193 161 197 161 219 C 162 245 165 252 165 252");}
+          25% {d: path("M 164 90 C 163 123 164 129 163 166 C 165 191 162 198 162 221 C 162 245 163 243 162 252");}
+          50% {d: path("M 164 90 C 163 123 167 143 167 165 C 165 184 162 198 162 221 C 161 237 161 242 161 250");}
+          75% {d: path("M 164 90 C 167 122 164 147 164 164 C 164 180 165 199 165 221 C 165 236 164 242 165 250");}
+          100% {d: path("M 164 90 C 158 123 157 120 163 166 C 167 193 161 197 161 219 C 162 245 165 252 165 252");}
+        }
+        svg line,
+        svg path {
+          transition: 5s;
+        }
+        svg:hover .augu{
+          animation: hideshow 2s ease infinite alternate;
+        }
+        svg:hover .jellyfish {
+          animation: bouncae 5s ease infinite alternate;
+        }
+        svg:hover #leg1 {
+          animation: leg1move 1s linear infinite forwards;
+        }
+        svg:hover #leg2 {
+          animation: leg2move 1s linear infinite forwards -0.1s;
+        }
+        svg:hover #leg3 {
+          animation: leg3move 1s linear infinite forwards -0.4s;
+        }
+        svg:hover #leg4 {
+          animation: leg4move 1s linear infinite forwards -0.6s;
+        }
+        svg:hover #leg5 {
+          animation: leg5move 1s linear infinite forwards -0.8s;
+        }
+        @keyframes dashes {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+        svg:hover #uwu {
+          stroke-dashoffset: 271;
+          stroke-dasharray: 271;
+          animation: dashes 2s linear forwards;
+        }
+        </style>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270 256" width="256" height="300">
+    
+        <g class="jellyfish">
+          <circle cx="91" cy="85" r="90" stroke="none" stroke-width="3" fill="pink"/>
+          <g class="augu">
+          <g>
+            <circle cx="52" cy="40" r="15" stroke="none" fill="white"/>
+            <circle cx="54" cy="40" r="10" stroke="none" fill="black"/>
+          </g>
+          <g transform="translate(75) rotate(180,52,40)">
+            <circle cx="52" cy="40" r="15" stroke="none" fill="white"/>
+            <circle cx="54" cy="40" r="10" stroke="none" fill="black"/>
+          </g>
+          </g>
+          <!-- ég gerði þessa sjálf wööp -->
+          <path class="munnur" d="M 80 50 c 5 5 15 5 20 0" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round"/>
+          <!-- öll tentaclein right to left -->
+          <path d="M 164 90 c -6 33 -7 30 -1 76 c 4 27 -2 31 -2 53 c 1 26 4 33 4 33" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round" class="leg" id="leg5"/>
+          <path d="M 125 92 s 4 10 5 33 c 3 23 -4 41 -3 69 s 5 39 0 60" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round" class="leg" id="leg4"/>
+          <path d="M 85 90 c 7 41 5 72 3 95 c -2 31 -2 68 -2 68" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round" class="leg" id="leg3"/>
+          <path d="M 51 90 c -5 30 0 50 -1 79 c -1 43 -5 52 -2 84" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round" class="leg" id="leg2"/>
+          <path d="M 18 90 c 1 35 2 31 3 55 c 0 23 -2 33 -1 61 c 0 20 1 45 1 45" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round" class="leg" id="leg1"/>
+          <!-- aðal body-ið -->
+          <path d="M 9 76 c 1 -5 7 -73 84 -73 s 79 69 80 75 c 0 16 -18 14 -20 1 c -2 -12 -19 -10 -18 2 c 0 12 -19 14 -20 0 c 0 -15 -20 -14 -20 -1 c -1 13 -19 13 -19 0 c -1 -13 -16 -13 -17 0 c 0 13 -17 13 -17 0 c 0 -12 -15 -13 -16 0 c 0 12 -19 14 -17 -4 z" fill="none" stroke="#000000" stroke-width="4.5" stroke-linecap="round"/>
+        </g>
+          <text x="-250" y="240" transform="rotate(270)" font-size="68" font-family="'Open Sans', sans-serif">
+            blubb.
+          </text>
+          <path id="uwu" d="m 142.67062,257.27257 c -4.47701,8.95387 -3.47419,16.0037 -2.06626,18.25224 1.62315,2.59227 3.35456,2.99682 6.33105,2.46429 3.54325,-0.63396 6.75123,-3.25985 9.48295,-6.96501 1.64481,-2.23094 5.53756,-7.55261 6.57075,-10.99642 -0.36235,3.47499 0.70305,5.50316 1.75365,6.51884 2.01699,1.94991 4.75548,1.20395 6.38174,-0.0894 2.56763,-2.04188 5.42006,-6.74771 5.42006,-6.74771 0,0 0.26584,10.89035 0.8996,14.46393 1.1642,5.3766 3.27766,7.56968 4.42461,7.49646 1.20763,-0.0771 3.73204,-1.92394 6.83135,-9.15591 3.09946,-7.23196 5.06349,-12.46013 5.06349,-12.46013 0,0 0.89464,10.80576 3.52232,16.55651 1.16843,2.5571 3.02422,5.79237 5.2182,5.80329 2.0994,0.011 4.87688,-5.32482 6.05538,-9.41372 1.47813,-5.12849 2.42314,-11.48872 3.80068,-12.52184 2.46051,0.32278 4.1864,1.44806 7.86067,1.43249 3.78817,-0.21088 6.03169,-0.84021 8.90659,-2.72893 -0.91651,3.94937 -1.97341,7.52743 -2.27714,9.87978 -0.76127,5.89595 0.40218,11.13249 4.29475,10.96642 7.76804,-0.33142 11.15187,-6.88717 13.19258,-10.51723 1.90933,-3.39632 4.316,-10.2503 4.316,-10.2503 0,0 -1.48238,3.60097 -1.4562,7.15084 0.34434,3.44381 0.73996,8.31752 5.16571,9.29822 2.41061,0.34436 5.32411,0.2383 8.66323,-3.86927" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+          
+        </svg>
+        
+</body>
+</html>
