@@ -17,13 +17,14 @@ let loop;
 
 class World {
   constructor(container) {
-    const controlsOn = false;
+    /* hérna er controlsOn sem ákveður hvort animation eða orbit virkar */
+    const controlsOn = true;
     camera = createCamera();
     renderer = createRenderer();
     scene = createScene();
     loop = new Loop(camera, scene, renderer);
     container.append(renderer.domElement);
-    const controls = null;
+    let controls = null;
     if(controlsOn==true){
       
       controls = createControls(camera, renderer.domElement);
@@ -73,7 +74,7 @@ class World {
 
 	}
 );*/
-    scene.add(lights[0], lights[2], gridHelper, lighthelper, wheelchair);
+    scene.add(lights[0], lights[2], wheelchair);//, gridHelper, lighthelper
 
 
     const resizer = new Resizer(container, camera, renderer);

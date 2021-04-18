@@ -2,12 +2,12 @@ import { MeshStandardMaterial } from 'https://unpkg.com/three@0.117.0/build/thre
 
 function createMaterials() {
   const body = new MeshStandardMaterial({
-    color: 'firebrick',
+    color: '#b22222',
     flatShading: true,
   });
 
   const detail = new MeshStandardMaterial({
-    color: 'darkslategray',
+    color: '#2f4f4f',
     flatShading: true,
   });
 
