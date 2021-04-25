@@ -1,0 +1,335 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Hello WebXR!</title>
+
+  <!-- three.js -->
+<script src="https://unpkg.com/three@0.126.0/build/three.js"></script>
+
+<script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script>
+<script type="module" src="/src/World/components/Wheelchair/Wheelchair.js"></script>
+</head>
+<body>
+
+<!-- Starting an immersive WebXR session requires user interaction.
+    We start this one with a simple button. -->
+<button onclick="activateXR()">Start Hello WebXR</button>
+
+<script>
+  function createGeometries() {
+    const bigwheel = new THREE.TorusBufferGeometry(1, 0.1, 8, 16);
+  
+    const smallwheel = new THREE.CylinderBufferGeometry(1,1,0.5,16);
+  
+    // we can reuse a single cylinder geometry for all 4 wheels
+  
+    // different values for the top and bottom radius creates a cone shape
+    const back = new THREE.BoxBufferGeometry(1.6,1.6,0.2);
+  
+    const handle = new THREE.CylinderBufferGeometry(0.2,0.2,1.5,16);
+  
+    return {
+      bigwheel,
+      smallwheel,
+      back,
+      handle,
+    };
+  }
+
+  function createMaterials() {
+    const body = new THREE.MeshStandardMaterial({
+      color: '#b22222',
+      flatShading: true,
+      depthWrite: false,
+    });
+  
+    const detail = new THREE.MeshStandardMaterial({
+      color: '#2f4f4f',
+      flatShading: true,
+      depthWrite: false,
+    });
+  
+    return { body, detail };
+  }
+  
+
+  
+function createMeshes() {
+  const i = 5;
+  const geometries = createGeometries();
+  const materials = createMaterials();
+
+  const back = new THREE.Mesh(geometries.back, materials.body);
+  back.position.set(0,2.3,-0.4);
+
+  const seat = back.clone();
+  seat.position.set(0, 1.6, 0.3);
+  seat.rotation.x = Math.PI / 2;
+
+  const leftbigwheel = new THREE.Mesh(geometries.bigwheel, materials.detail);
+  leftbigwheel.position.set(-1, 1, 0);
+  leftbigwheel.rotation.y = Math.PI / 2;
+  
+  const rightbigwheel = leftbigwheel.clone();
+  rightbigwheel.position.set(1, 1, 0);
+  rightbigwheel.rotation.z = Math.PI;
+
+  const leftsmallwheel = new THREE.Mesh(geometries.smallwheel, materials.detail);
+  leftsmallwheel.position.set(-0.6,0.4,1.2);
+  leftsmallwheel.rotation.x = Math.PI /2;
+  leftsmallwheel.rotation.z = Math.PI / 2;
+  leftsmallwheel.rotation.y = 0;
+  leftsmallwheel.scale.set(0.4,0.4,0.4);
+  console.log(leftsmallwheel.quaternion)
+
+  const rightsmallwheel = leftsmallwheel.clone();
+  rightsmallwheel.position.set(0.6,0.4,1.2);
+
+  const lefthandle = new THREE.Mesh(geometries.handle, materials.detail);
+  lefthandle.rotation.x = Math.PI / 2;
+  lefthandle.scale.set(0.4,0.4,0.4)
+  lefthandle.position.set(-0.7,3,-0.65);
+
+  const righthandle = lefthandle.clone();
+  righthandle.position.set(0.7,3,-0.65);
+
+  
+  const position = new THREE.VectorKeyframeTrack(
+    '.position',
+    [0, 3, 6],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0],
+  );
+  const rotate = new THREE.QuaternionKeyframeTrack(
+    '.quaternion',
+    [0, 0.5, 1.5, 2],[0.5,0.5,-0.5,0.5, 0.6123724356957945, 0.3535533905932737, -0.35355339059327373, 0.6123724356957946,0.3535533905932737,0.6123724356957946,-0.6123724356957946,0.3535533905932737,0.5,0.5,-0.5,0.5,]
+  );
+  const roll = new THREE.QuaternionKeyframeTrack (
+    ".quaternion",
+    [0,1,2],
+    [0.5,0.5,-0.5,0.5, 0.5,0.5,0.5,-0.5, -0.5,-0.5,0.5,-0.5]
+  )
+  const rollbig = new THREE.QuaternionKeyframeTrack (
+    ".quaternion",
+    [0,2],
+    [0, 0.7071067811865475,0, 0.7071067811865475, 0.7071067811865475,0,0.7071067811865475,0,]// -0.5,-0.5,0.5,-0.5]
+  )
+  //0.7071067811865475
+  const movewheel1 = new THREE.AnimationClip('movewheel1', -1, [
+    roll,
+    rotate,
+  ]);
+  const movewheel2 = new THREE.AnimationClip('movewheel2', -1, [
+    roll,
+    
+  ]);
+  const smol1 = new THREE.AnimationClip("smol1", -1, [roll]);
+  console.log(rightbigwheel.quaternion);
+  const big1 = new THREE.AnimationClip("big1", -1, [rollbig]);
+  const big2 = new THREE.AnimationClip("big2", -1, [rollbig]);
+ 
+ 
+  return {
+    back,
+    seat,
+    leftbigwheel,
+    rightbigwheel,
+    leftsmallwheel,
+    rightsmallwheel,
+    lefthandle,
+    righthandle,
+  };
+}
+
+
+async function activateXR() {
+  const clock = new THREE.Clock();
+  // Add a canvas element and initialize a WebGL context that is compatible with WebXR.
+  const canvas = document.createElement("canvas");
+  document.body.appendChild(canvas);
+  const gl = canvas.getContext("webgl", {xrCompatible: true});
+
+  // To be continued in upcoming steps.
+  const scene = new THREE.Scene();
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+const gridhelper = new THREE.GridHelper();
+
+directionalLight.position.set(10, 15, 10);
+scene.add(directionalLight, gridhelper);
+
+
+
+
+class Wheelchair extends THREE.Group {
+  constructor() {
+    super();
+    const wheelSpeed = 0.41;
+    this.meshes = createMeshes();
+    
+    this.add(
+      this.meshes.back,
+      this.meshes.seat,
+      this.meshes.leftbigwheel,
+      this.meshes.rightbigwheel,
+      this.meshes.leftsmallwheel,
+      this.meshes.rightsmallwheel,
+      this.meshes.lefthandle,
+      this.meshes.righthandle,
+      );
+  }
+      /*
+      const mixer = new THREE.AnimationMixer(this.meshes.leftsmallwheel);
+      const action = mixer.clipAction(this.meshes.movewheel1);
+    const mixer2 = new THREE.AnimationMixer(this.meshes.rightsmallwheel);
+    const action2 = mixer2.clipAction(this.meshes.movewheel2);
+
+    const mixer3 = new THREE.AnimationMixer(this.meshes.leftbigwheel);
+    const mixer4 = new THREE.AnimationMixer(this.meshes.rightbigwheel);
+    const action3 = mixer3.clipAction(this.meshes.big1);
+    const action4 = mixer4.clipAction(this.meshes.big2);
+
+    
+    
+    //this.meshes.leftsmallwheel.tick = (delta) => mixer.update(delta);
+    this.tick = (delta) => {mixer2.update(delta);
+    mixer.update(delta); mixer3.update(delta);mixer4.update(delta); mixer5.update(delta);};
+    const forward = 0;
+
+/* **********************
+
+ég finn ekki leið til að geta bæði notað orbit controls og event listener
+á sama tíma án þess að slökkva á orbit controls á meðan
+
+ef þú vilt sjá animation farðu inní world og breyttu controlsOn í false
+eftir það geturðu haldið inni músinni og þá á annað hjólið að hreyfast
+eins og það sé ónýtt
+
+************************* */
+
+    /*
+      act.play();
+      action2.play();
+      action3.play();
+      action4.play();
+      
+  }*/
+
+  tick(delta) {
+    /*this.mixer.update(delta);
+    this.mixer2.update(delta);*/
+    
+    this.meshes.leftbigwheel.rotation.x += 0.4 * delta*2;
+    this.meshes.rightbigwheel.rotation.x += 0.4 * delta*2;
+    this.meshes.leftsmallwheel.rotation.x += 0.4 * delta*2;
+    this.meshes.rightsmallwheel.rotation.x += 0.4 * delta*2;
+    
+  }
+}
+let wheelchair = new Wheelchair();
+wheelchair.scale.set(0.1,0.1,0.1);
+
+
+// Set up the WebGLRenderer, which handles rendering to the session's base layer.
+const renderer = new THREE.WebGLRenderer({
+  alpha: true,
+  preserveDrawingBuffer: true,
+  canvas: canvas,
+  context: gl
+});
+renderer.autoClear = false;
+
+// The API directly updates the camera matrices.
+// Disable matrix auto updates so three.js doesn't attempt
+// to handle the matrices independently.
+const camera = new THREE.PerspectiveCamera();
+
+camera.matrixAutoUpdate = false;
+// Initialize a WebXR session using "immersive-ar".
+//some async function
+
+
+
+
+
+const session = await navigator.xr.requestSession("immersive-ar", {requiredFeatures: ['hit-test']});
+
+session.updateRenderState({
+  baseLayer: new XRWebGLLayer(session, gl)
+});
+
+// A 'local' reference space has a native origin that is located
+// near the viewer's position at the time the session was created.
+const referenceSpace = await session.requestReferenceSpace('local');
+// Create another XRReferenceSpace that has the viewer as the origin.
+const viewerSpace = await session.requestReferenceSpace('viewer');
+// Perform hit testing using the viewer as origin.
+const hitTestSource = await session.requestHitTestSource({ space: viewerSpace });
+// Create a render loop that allows us to draw on the AR view.
+const loader = new THREE.GLTFLoader();
+let reticle;
+loader.load("https://immersive-web.github.io/webxr-samples/media/gltf/reticle/reticle.gltf", function(gltf) {
+  reticle = gltf.scene;
+  reticle.visible = false;
+  scene.add(reticle);
+})
+let chairs = [];
+let flower;
+
+session.addEventListener("select", (event) => {
+  if (wheelchair) {
+    const clone = wheelchair.clone();
+    clone.position.copy(reticle.position);
+    console.log(reticle.position);
+    scene.add(clone);
+    chairs.push(clone);
+    
+  }
+});
+
+const onXRFrame = (time, frame) => {
+
+  // Queue up the next draw request.
+  session.requestAnimationFrame(onXRFrame);
+
+  // Bind the graphics framebuffer to the baseLayer's framebuffer
+  gl.bindFramebuffer(gl.FRAMEBUFFER, session.renderState.baseLayer.framebuffer)
+
+  // Retrieve the pose of the device.
+  // XRFrame.getViewerPose can return null while the session attempts to establish tracking.
+  const pose = frame.getViewerPose(referenceSpace);
+  if (pose) {
+    // In mobile AR, we only have one view.
+    const view = pose.views[0];
+    let time = clock.getDelta();
+    chairs.forEach((chair) => {
+      chair.tick(time);
+    })
+    
+
+    const viewport = session.renderState.baseLayer.getViewport(view);
+    renderer.setSize(viewport.width, viewport.height)
+
+    // Use the view's transform matrix and projection matrix to configure the THREE.camera.
+    camera.matrix.fromArray(view.transform.matrix)
+    camera.projectionMatrix.fromArray(view.projectionMatrix);
+    camera.updateMatrixWorld(true);
+    const hitTestResults = frame.getHitTestResults(hitTestSource);
+if (hitTestResults.length > 0 && reticle) {
+  const hitPose = hitTestResults[0].getPose(referenceSpace);
+  reticle.visible = true;
+  reticle.position.set(hitPose.transform.position.x, hitPose.transform.position.y, hitPose.transform.position.z)
+  reticle.updateMatrixWorld(true);
+}
+
+    // Render the scene with THREE.WebGLRenderer.
+    renderer.render(scene, camera)
+  }
+}
+session.requestAnimationFrame(onXRFrame);
+}
+</script>
+</body>
+</html>
